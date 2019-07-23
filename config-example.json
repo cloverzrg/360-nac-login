@@ -1,0 +1,12 @@
+{
+  "username": "",
+  "password": "",
+  "cron_spec": [
+    "*/15 * * * * ?",
+    "0 0 10 * * MON-FRI"
+  ],
+  "wifi_regexp": [
+    "360\\d",
+    "360Internal\\d"
+  ]
+}
