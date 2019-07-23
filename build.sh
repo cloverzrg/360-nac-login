@@ -1,4 +1,5 @@
 rm -f ./bin/*
+
 env CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build  -o ./bin/wifi_login_darwin_amd64
 env CGO_ENABLED=0 GOOS=freebsd GOARCH=386 go build  -o ./bin/wifi_login_freebsd_386
 env CGO_ENABLED=0 GOOS=freebsd GOARCH=amd64 go build  -o ./bin/wifi_login_freebsd_amd64
@@ -13,8 +14,14 @@ env CGO_ENABLED=0 GOOS=linux GOARCH=mips64le go build  -o ./bin/wifi_login_linux
 env CGO_ENABLED=0 GOOS=linux GOARCH=mips GOMIPS=softfloat go build  -o ./bin/wifi_login_linux_mips
 env CGO_ENABLED=0 GOOS=linux GOARCH=mipsle GOMIPS=softfloat go build  -o ./bin/wifi_login_linux_mipsle
 
-for filename in ./bin/*; do
+cp config-example.json ./bin/config.json
+cd ./bin
+for filename in ./*; do
     echo $filename
-    tar -czvf  ${filename}.tar.gz  ${filename} config-example.json
+    if [ $filename = "./config.json" ];then
+        continue
+    fi
+    filename2=$(echo $filename | sed "s/.exe//")
+    tar -czvf  ${filename2}.tar.gz  ${filename} config.json
     rm ${filename}
 done
